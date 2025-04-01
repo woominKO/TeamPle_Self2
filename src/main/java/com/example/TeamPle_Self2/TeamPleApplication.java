@@ -1,4 +1,4 @@
-package com.example.TeamPle;
+package com.example.TeamPle_Self2;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
