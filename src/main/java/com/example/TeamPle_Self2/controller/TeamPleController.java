@@ -27,7 +27,8 @@ public class TeamPleController {
     @PostMapping("/api/rooms/{roomId}")
     public ResponseEntity<UserRes> Join(@RequestBody JoinReq req, @PathVariable UUID roomId){
         UserRes user = roomService.JoinRoom(req,roomId);
+        String roomName = roomService.getRoomNameByRoomId(roomId);
         return ResponseEntity.ok(user);
-
     }
+
 }

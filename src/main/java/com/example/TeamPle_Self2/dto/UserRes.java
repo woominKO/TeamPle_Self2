@@ -14,12 +14,15 @@ public class UserRes {
     private String roleTag;
     private boolean accepted;
     private UUID roomId; // 단순 정보만
+    private String roomName;
 
-    public UserRes(User user) {
+    public UserRes(User user, String roomName) {
         this.id = user.getId();
         this.username = user.getUsername();
         this.roleTag = user.getRoleTag();
         this.accepted = user.isAccepted();
         this.roomId = user.getRoom().getRoomId();
+        this.roomName =  roomName;
+
     }
 }

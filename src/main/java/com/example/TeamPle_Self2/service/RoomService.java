@@ -6,7 +6,9 @@ import com.example.TeamPle_Self2.dto.RoomResponseDto;
 import com.example.TeamPle_Self2.dto.UserRes;
 import com.example.TeamPle_Self2.repository.RoomRepository;
 import com.example.TeamPle_Self2.repository.UserRepository;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
 import org.springframework.stereotype.Service;
 import com.example.TeamPle_Self2.domain.User;
@@ -15,6 +17,8 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Getter
+@Setter
 public class RoomService {
     private final RoomRepository roomRepository;
     private final UserRepository userRepository;
@@ -34,6 +38,13 @@ public class RoomService {
         );
     }
 
+    public String getRoomNameByRoomId(UUID roomId) {
+        Room room = roomRepository.findById(roomId)
+                .orElseThrow(() -> new IllegalArgumentException("Room not found"));
+        return room.getRoomName();
+    }
+
+
     public UserRes JoinRoom(JoinReq req, UUID roomId){
         // 1. 방 조회
         Room room = roomRepository.findById(roomId)
@@ -42,12 +53,13 @@ public class RoomService {
         // 2. 유저 생성
         User user = new User(req.getUsername(), req.getRoleTag(), req.isAccepted());
 
+
         // 3. 방과 연관관계 설정
         user.setRoom(room);
 
         // 4. 저장
         User savedUser = userRepository.save(user);
 
-        return new UserRes(savedUser);
+        return new UserRes(savedUser, room.getRoomName());
 
     }}
